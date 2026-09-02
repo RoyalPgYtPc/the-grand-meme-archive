@@ -23,11 +23,16 @@ function renderEntry() {
 
   const mediaBlock = entry.publicly_hosted
     ? `<div class="entry-media">
-         <div class="entry-media-frame">${placeholderThumbSVG(entry)}</div>
+         <div class="entry-media-frame">${entry.file_path
+           ? `<img src="${mediaURL(entry)}" alt="${escapeHTML(entry.title || "Archived meme")}">`
+           : placeholderThumbSVG(entry)}</div>
        </div>
        <div class="entry-actions">
-         <button class="btn btn-secondary" onclick="showToast('This is a demo placeholder — swap in the real archived file at ' + '${entry.file_path}')">View full size</button>
-         <button class="btn btn-secondary" onclick="showToast('Demo mode — real deployments serve the file at ' + '${entry.file_path}')">Download original</button>
+         ${entry.file_path
+           ? `<a class="btn btn-secondary" href="${mediaURL(entry)}" target="_blank" rel="noopener">View full size</a>
+              <a class="btn btn-secondary" href="${mediaURL(entry)}" download>Download original</a>`
+           : `<button class="btn btn-secondary" onclick="showToast('This is a demo placeholder — no media file is recorded for this entry')">View full size</button>
+              <button class="btn btn-secondary" onclick="showToast('Demo mode — no media file is recorded for this entry')">Download original</button>`}
        </div>`
     : `<div class="unhosted-block">
          <div class="lock-icon">◈</div>
@@ -86,6 +91,8 @@ function renderEntry() {
         <div class="record-table">${rowsHTML}</div>
       </div>
     </div>`;
+
+  showContentWarning(entry, () => {});
 }
 
 document.addEventListener("DOMContentLoaded", renderEntry);

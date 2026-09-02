@@ -53,7 +53,7 @@ function memeCardHTML(entry) {
   const score = entry.score != null ? `<span class="score">▲ ${formatNum(entry.score)}</span>` : `<span>—</span>`;
 
   return `
-  <a class="meme-card" href="entry.html?id=${entry.archive_id}">
+  <a class="meme-card" href="entry.html?id=${entry.archive_id}" onclick="return handleSensitiveEntryClick(event, ARCHIVE_DATA.find(e => e.archive_id === '${escapeHTML(entry.archive_id)}'))">
     ${thumb}
     <div class="meme-info">
       ${title}
@@ -63,6 +63,48 @@ function memeCardHTML(entry) {
       </div>
     </div>
   </a>`;
+}
+
+function isSensitiveEntry(entry) {
+  const tags = (entry.tags || []).map(tag => String(tag).toLowerCase());
+  return !!entry.nsfw || !!entry.sensitive_offensive || tags.some(tag => /\b(nsfw|dark|offensive|18\+)\b/.test(tag));
+}
+
+function contentWarningsDisabled() {
+  return localStorage.getItem("archive-content-warnings-disabled") === "true";
+}
+
+function showContentWarning(entry, onContinue) {
+  if (!isSensitiveEntry(entry) || contentWarningsDisabled()) {
+    onContinue();
+    return;
+  }
+  const modal = document.createElement("div");
+  modal.className = "content-warning-backdrop";
+  modal.innerHTML = `
+    <div class="content-warning" role="dialog" aria-modal="true" aria-labelledby="content-warning-title">
+      <h2 id="content-warning-title">Content warning</h2>
+      <p>This meme may contain NSFW, dark, sensitive, or offensive material. Are you 18 or older? It may be offensive to some people.</p>
+      <label><input type="checkbox" id="disable-content-warnings"> Don't show these warnings again</label>
+      <div class="content-warning-actions">
+        <button class="btn btn-secondary" data-action="cancel">Go back</button>
+        <button class="btn btn-primary" data-action="continue">I am 18+ / Continue</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+  modal.querySelector('[data-action="cancel"]').addEventListener("click", () => modal.remove());
+  modal.querySelector('[data-action="continue"]').addEventListener("click", () => {
+    if (modal.querySelector("#disable-content-warnings").checked) localStorage.setItem("archive-content-warnings-disabled", "true");
+    modal.remove();
+    onContinue();
+  });
+}
+
+function handleSensitiveEntryClick(event, entry) {
+  if (!isSensitiveEntry(entry) || contentWarningsDisabled()) return true;
+  event.preventDefault();
+  showContentWarning(entry, () => { location.href = `entry.html?id=${encodeURIComponent(entry.archive_id)}`; });
+  return false;
 }
 
 function escapeHTML(str) {

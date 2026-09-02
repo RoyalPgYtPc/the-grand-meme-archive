@@ -26,7 +26,17 @@ function initials(title, category) {
   return (words[0][0] + words[1][0]).toUpperCase();
 }
 
+function mediaURL(entry) {
+  return entry.file_path
+    ? entry.file_path.split("/").map(encodeURIComponent).join("/")
+    : "";
+}
+
 function placeholderThumbSVG(entry) {
+  if (entry.file_path) {
+    return `<img class="meme-thumb-image" src="${mediaURL(entry)}" alt="${escapeHTML(entry.title || "Archived meme")}" loading="lazy">`;
+  }
+
   const h = hashStr(entry.archive_id);
   const [c1, c2] = THUMB_PALETTES[h % THUMB_PALETTES.length];
   const label = initials(entry.title, entry.category);
