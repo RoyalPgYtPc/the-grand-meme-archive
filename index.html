@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Great Meme Archive — an r/MemeExchangeCommunism project</title>
+<meta name="description" content="Preserving the history of r/MemeExchangeCommunism, one meme at a time. Search the complete catalogue — hosted or not.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">◈</span> THE GREAT MEME ARCHIVE
+      <span class="brand-sub">r/MemeExchangeCommunism</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-page="index.html" class="active">Archive</a>
+      <a href="browse.html" data-page="browse.html">Browse / Search</a>
+      <a href="request.html" data-page="request.html">Request</a>
+      <a href="about.html" data-page="about.html">About</a>
+    </div>
+    <a class="nav-cta" href="browse.html">Browse Archive</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-kicker">◈ Official archive of r/MemeExchangeCommunism</div>
+    <h1>The Great<br><span class="accent">Meme Archive</span></h1>
+    <p class="lede">Preserving the history of r/MemeExchangeCommunism, one meme at a time. Every post ever indexed stays searchable — whether or not we could afford to host the file.</p>
+
+    <form class="hero-search" onsubmit="event.preventDefault(); location.href = 'browse.html?q=' + encodeURIComponent(this.q.value);">
+      <input type="text" name="q" placeholder="Search titles, authors, tags, archive IDs…" autocomplete="off">
+      <button type="submit">Search</button>
+    </form>
+    <div class="hero-actions">
+      <a href="browse.html">Browse the archive →</a>
+      <a href="about.html">What is this?</a>
+    </div>
+  </div>
+</header>
+
+<section class="stats-strip">
+  <div class="container">
+    <div class="stats-row" id="stats-row"><!-- filled by JS --></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Featured memes</h2>
+      <a class="see-all" href="browse.html?sort=score">See all →</a>
+    </div>
+    <div class="card-grid" id="featured-grid"></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head">
+      <h2>Recently archived</h2>
+      <a class="see-all" href="browse.html?sort=recent">See all →</a>
+    </div>
+    <div class="card-grid" id="recent-grid"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>THE GREAT MEME ARCHIVE</h4>
+        <p class="footer-note">An independent preservation project, officially part of r/MemeExchangeCommunism. The catalogue is bigger than what we can publicly host — and that's by design.</p>
+      </div>
+      <div>
+        <h4>Archive</h4>
+        <ul>
+          <li><a href="browse.html">Browse</a></li>
+          <li><a href="request.html">Request media</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://royalpgytpc.github.io/MemeExchangeCommunism/" target="_blank" rel="noopener">Main site</a></li>
+          <li><a href="https://www.reddit.com/r/memeexchangecommunism/" target="_blank" rel="noopener">Reddit</a></li>
+          <li><a href="https://discord.gg/Sys5nNmfE7" target="_blank" rel="noopener">Discord</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© The Great Meme Archive · An r/MemeExchangeCommunism project</span>
+      <span>The meme doesn't disappear just because it isn't hosted.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/thumbnails.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+  const stats = computeStats(ARCHIVE_DATA);
+  document.getElementById("stats-row").innerHTML = `
+    <div class="stat"><div class="num">${formatNum(stats.total)}</div><div class="label">MEMES INDEXED</div></div>
+    <div class="stat"><div class="num hosted-color">${formatNum(stats.hosted)}</div><div class="label">PUBLICLY HOSTED</div></div>
+    <div class="stat"><div class="num index-color">${formatNum(stats.indexOnly)}</div><div class="label">INDEX ONLY</div></div>
+  `;
+
+  const featured = [...ARCHIVE_DATA].filter(e => e.publicly_hosted)
+    .sort((a,b) => (b.score||0) - (a.score||0)).slice(0,3);
+  document.getElementById("featured-grid").innerHTML = featured.map(memeCardHTML).join("");
+
+  const recent = [...ARCHIVE_DATA].sort((a,b) => (b.archived_date||"").localeCompare(a.archived_date||"")).slice(0,3);
+  document.getElementById("recent-grid").innerHTML = recent.map(memeCardHTML).join("");
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request media — The Great Meme Archive</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">◈</span> THE GREAT MEME ARCHIVE
+      <span class="brand-sub">r/MemeExchangeCommunism</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-page="index.html">Archive</a>
+      <a href="browse.html" data-page="browse.html">Browse / Search</a>
+      <a href="request.html" data-page="request.html" class="active">Request</a>
+      <a href="about.html" data-page="about.html">About</a>
+    </div>
+    <a class="nav-cta" href="browse.html">Browse Archive</a>
+  </div>
+</nav>
+
+<div class="container" style="padding-top:48px; padding-bottom:90px;">
+  <h1 style="font-size:30px; max-width:560px;">Found something in the archive but can't view the media?</h1>
+  <p style="max-width:520px; margin-top:10px;">The Great Meme Archive contains more media than can be publicly hosted within our available storage limits. Some entries exist as index records without publicly viewable media — send us the Archive ID and we'll look for it.</p>
+
+  <div style="margin-top:36px;">
+    <form class="form-panel" id="request-form">
+      <div class="notice" id="found-entry" style="display:none;">
+        <span id="found-entry-text"></span>
+      </div>
+
+      <div class="field">
+        <label for="req-id">ARCHIVE ID</label>
+        <input type="text" id="req-id" placeholder="e.g. 004282" required>
+      </div>
+
+      <div class="field">
+        <label for="req-note">NOTE (OPTIONAL)</label>
+        <textarea id="req-note" placeholder="Anything that helps us find it — where you saw it, roughly when it was posted, etc."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Send request</button>
+      <p class="field-hint" style="margin-top:14px; text-align:center;">
+        Opens your email client, addressed to <span id="contact-email-display" style="color:var(--gold);"></span>
+      </p>
+    </form>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container footer-bottom" style="border-top:none; margin-top:0; padding-top:0;">
+    <span>© The Great Meme Archive · An r/MemeExchangeCommunism project</span>
+  </div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/request.js"></script>
+</body>
+</html>

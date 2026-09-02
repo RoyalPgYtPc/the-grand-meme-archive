@@ -1,0 +1,10 @@
+# Local-only tools — never commit or deploy these.
+# This file edits your real archive data directly from disk and has
+# no login of its own; keeping it out of the repo IS its security model.
+archiver-local.html
+archiver/
+
+# Common OS/editor clutter
+.DS_Store
+Thumbs.db
+*.swp

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browse — The Great Meme Archive</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">◈</span> THE GREAT MEME ARCHIVE
+      <span class="brand-sub">r/MemeExchangeCommunism</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-page="index.html">Archive</a>
+      <a href="browse.html" data-page="browse.html" class="active">Browse / Search</a>
+      <a href="request.html" data-page="request.html">Request</a>
+      <a href="about.html" data-page="about.html">About</a>
+    </div>
+    <a class="nav-cta" href="request.html">Request media</a>
+  </div>
+</nav>
+
+<div class="container" style="padding-top:36px;">
+  <h1 style="font-size:30px; margin-bottom:6px;">Browse the archive</h1>
+  <p style="max-width:560px;">Every indexed meme is searchable here — hosted or not. Index-only entries still show their full recorded metadata.</p>
+</div>
+
+<div class="container" style="padding-top:20px; padding-bottom:70px;">
+  <div class="browse-layout">
+
+    <aside class="filter-panel">
+      <div class="filter-group">
+        <h4>AVAILABILITY</h4>
+        <div class="filter-options">
+          <button class="filter-chip" data-filter="availability" data-value="hosted">Publicly hosted</button>
+          <button class="filter-chip" data-filter="availability" data-value="index-only">Index only</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h4>CATEGORY</h4>
+        <div class="filter-options">
+          <button class="filter-chip" data-filter="category" data-value="images">Images</button>
+          <button class="filter-chip" data-filter="category" data-value="gifs">GIFs</button>
+          <button class="filter-chip" data-filter="category" data-value="videos">Videos</button>
+          <button class="filter-chip" data-filter="category" data-value="templates">Templates</button>
+          <button class="filter-chip" data-filter="category" data-value="reactions">Reactions</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h4>FLAIR</h4>
+        <div class="filter-options">
+          <button class="filter-chip" data-filter="flair" data-value="OC">OC</button>
+          <button class="filter-chip" data-filter="flair" data-value="Repost">Repost</button>
+          <button class="filter-chip" data-filter="flair" data-value="Meta">Meta</button>
+          <button class="filter-chip" data-filter="flair" data-value="NSFW">NSFW</button>
+          <button class="filter-chip" data-filter="flair" data-value="Not English">Not English</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <h4>MINIMUM SCORE</h4>
+        <input type="number" id="min-score" placeholder="e.g. 1000" min="0">
+      </div>
+    </aside>
+
+    <div>
+      <div class="browse-toolbar">
+        <input type="text" id="search-input" placeholder="Search title, author, tag, archive ID…"
+          style="flex:1; min-width:220px; background:var(--bg-card); border:1px solid var(--border); color:var(--text); padding:11px 14px; border-radius:2px; font-size:14.5px; font-family:var(--body);">
+        <select id="sort-select" class="sort-select">
+          <option value="recent">Recently archived</option>
+          <option value="score">Most upvoted</option>
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="id">Archive ID</option>
+        </select>
+      </div>
+      <div class="result-count" id="result-count" style="margin-bottom:16px;"></div>
+
+      <div class="card-grid" id="results-grid"></div>
+
+      <div class="empty-state" id="empty-state" style="display:none;">
+        <h3>Nothing matches those filters</h3>
+        <p>Try a broader search, or clear a filter. Index-only entries are included in results too — try removing the "Publicly hosted" filter.</p>
+      </div>
+
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container footer-bottom" style="border-top:none; margin-top:0; padding-top:0;">
+    <span>© The Great Meme Archive · An r/MemeExchangeCommunism project</span>
+  </div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/thumbnails.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/browse.js"></script>
+</body>
+</html>
